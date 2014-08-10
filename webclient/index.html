@@ -285,8 +285,20 @@
         <form>
             <input id="searchinput" class="span2" data-clear-btn="true"
                    onkeypress="return searchPressed(event.keyCode);" id="appendedInputButton" type="text"/>
+
+	    <input id="local" type="checkbox" checked="checked" />
+______Local
+	    <input id="spotify" type="checkbox" checked="checked" />
+______Spotify
+	    <input  type="checkbox" id="youtube" />
+______YouTube
+	    <input type="checkbox" id="soundcloud" />
+______Soundcloud
+<!--    <input class="span2" type="checkbox" id="all" />
+______All
+>-->
             <button class="btn" type="button" onclick="return initSearch(event.value);">
-                Search!
+                Search
             </button>
         </form>
     </div>

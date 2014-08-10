@@ -12,11 +12,27 @@ function searchPressed(key) {
     return true;
 }
 
+
 //init search
 function initSearch() {
+
     var value = $('#searchinput').val();
 
-    if ((value.length < 100) && (value.length > 0)) {
+    var local = document.getElementById('local').checked;
+    var spotify = document.getElementById('spotify').checked;
+    var youtube = document.getElementById('youtube').checked;
+    var soundcloud = document.getElementById('soundcloud').checked;
+    var all = false;//document.getElementById('all').checked;
+
+//    for (var key in $('#all'))
+//	document.write(key, " : " , $('#all')[key], "</br>");
+
+
+    
+//    var debug = 
+//	document.write('all: ',all,  " " , $('#all').checked, " " );
+
+   if ((value.length < 100) && (value.length > 0)) {
         showLoading(true);
         //hide ios/android keyboard 
         document.activeElement.blur();
@@ -27,10 +43,42 @@ function initSearch() {
         delete customTracklists['albumresultscache'];
         delete customTracklists['trackresultscache'];
         $("#searchresults").hide();
-        mopidy.library.search({
-            any: [value]
-        }).then(processSearchResults, console.error);
+	
+       if(all)	{
+            mopidy.library.search({
+		any: [value]
+            }).then(processSearchResults, console.error);
+	}
+	else
+	{
+	    var urislist = [];
+	    if(local)
+		urislist.push('local:');
+	    if(spotify)
+		urislist.push('spotify:');
+	    if(youtube)
+		urislist.push('yt:');
+	    if(soundcloud)
+		urislist.push('soundcloud:');
+
+	    
+//	    urislist = "'spotify:'";
+//	    document.write(urislist)
+            mopidy.library.search({
+		any: [value]
+	    }
+		, uris = urislist
+            ).then(processSearchResults, console.error);
+	}
+/*	else
+	{
+
+	}
+*/
 //       console.log('search sent', value);
+/*        mopidy.library.search({
+            any: [value]
+        }).then(processSearchResults, console.error);*/
     }
 }
 
